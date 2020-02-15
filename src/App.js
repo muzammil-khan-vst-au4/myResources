@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Card from './components/Card'
+import resources from './resources'
+import Header from "./components/Header"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {  
+  state = {
+    query : ""
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      query : e.target.value
+    })
+  }
+  
+  render() {
+    let filtered = resources.filter((resource) => {
+      return resource.name.toLowerCase().includes(this.state.query.toLowerCase())
+    })
+    return (
+      <div className="grey lighten-4">
+      <div className="tc container">
+        <Header />
+        <input onChange={this.handleChange} placeholder="Search Resources" className="input-field"></input> <br />
+        <Card resources={filtered}/>
+      </div> 
+      </div>
+    );
+  }
 }
 
 export default App;
